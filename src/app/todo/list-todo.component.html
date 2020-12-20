@@ -1,0 +1,54 @@
+<h1>{{user.firstName}}'s Todo list</h1>
+<div class="row">
+    <span class="col-md-6">
+        <a routerLink="add" class="btn btn-sm btn-success mb-2">Add todo</a>
+    </span>
+    <span class="col-md-6">
+        <div class="form-group col-md-6">    
+            <input type="text" name="search" class="form-control"  placeholder="Search" [(ngModel)]="searchedKeyword">
+          </div>
+          
+    </span>
+
+</div>
+
+<table class="table table-striped" >
+    <thead>
+        <tr>
+            <th style="width: 15%">Task Name</th>
+            <th style="width: 15%">Category</th>
+            <th style="width: 15%">Start Date</th>
+            <th style="width: 15%">End Date</th>
+            <th style="width: 15%">Description</th>
+            <th style="width: 15%">Priority</th>
+            <th style="width: 10%">Status</th>
+
+        </tr>
+    </thead>
+    <tbody *ngFor="let todo of todolist | filter:searchedKeyword">
+        <tr   *ngIf="todo.userId===user._id">
+            <td>{{todo.taskName}}</td>
+            <td>{{todo.category}}</td>
+            <td>{{todo.startDate}}</td>
+            <td>{{todo.endDate}}</td>
+            <td>{{todo.textArea}}</td>
+            <td>{{todo.priority}}</td>
+            <!-- <td>{{todo.userId}}</td> -->
+           <td >
+            <mat-checkbox class="example-margin"  (change)="setAll($event.checked,todo._id)" [disabled]="todo._id==thisTodo">Completed</mat-checkbox>
+        </td>
+            <td style="white-space: nowrap" *ngIf="todo._id!=thisTodo">
+                <a routerLink="edit/{{todo._id}}" class="btn btn-sm btn-primary mr-1">Edit</a>
+                <button (click)="deleteTodo(todo._id)" class="btn btn-sm btn-danger btn-delete-user" [disabled]="todo.isDeleting">
+                    <span *ngIf="todo.isDeleting" class="spinner-border spinner-border-sm"></span>
+                    <span *ngIf="!todo.isDeleting">Delete</span>
+                </button>
+            </td>
+        </tr>
+        <tr *ngIf="!todolist">
+            <td colspan="4" class="text-center">
+                <span class="spinner-border spinner-border-lg align-center"></span>
+            </td>
+        </tr>
+    </tbody>
+</table>

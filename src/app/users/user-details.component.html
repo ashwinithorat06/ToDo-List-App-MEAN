@@ -1,0 +1,25 @@
+<div class="p-4">
+    <div class="container">
+        <h1>Hi {{user.firstName}}!</h1>
+        <div *ngFor="let singleUser of users" >
+            <div style="white-space: nowrap" *ngIf="singleUser.username===user.username">
+                <!-- <h1>{{user.firstName}}'s Account</h1> -->
+                <a routerLink="edit/{{singleUser._id}}" class="btn btn-sm btn-primary mr-1">Edit</a>
+                <button (click)="deleteUser(singleUser._id)" class="btn btn-sm btn-danger btn-delete-user" [disabled]="singleUser.isDeleting">
+                    <span *ngIf="singleUser.isDeleting" class="spinner-border spinner-border-sm"></span>
+                    <span *ngIf="!singleUser.isDeleting">Delete</span>
+                </button>
+            </div>
+        </div>
+        <br>
+        <h4>Your account details:</h4>
+        <ul>
+            <li>First Name: {{user.firstName}}</li>
+            <li>Last Name: {{user.lastName}}</li>
+            <li>User Name: {{user.username}}</li>
+        </ul>
+        <p><a routerLink="/todo">View your todo list</a></p>
+        <p><a routerLink="userslist">View all Users</a></p>
+    
+    </div>
+</div>

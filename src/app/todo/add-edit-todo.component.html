@@ -1,0 +1,92 @@
+<h1 *ngIf="isAddMode">Add Todo</h1>
+<h1 *ngIf="!isAddMode">Edit Todo</h1>
+<form [formGroup]="form" (ngSubmit)="onSubmit()">
+    <div class="form-row">
+        <div class="form-group col">
+            <label for="taskName">Task Name</label>
+            <input type="text" formControlName="taskName" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.taskName.errors }" />
+            <div *ngIf="submitted && f.taskName.errors" class="invalid-feedback">
+                <div *ngIf="f.taskName.errors.required">Task Name is required</div>
+            </div>
+        </div>
+    </div>
+        <!-- Category -->
+<div class="form-group col">
+    <div class="form-group">
+      <label for="categories">Category:</label> 
+     <select 
+       id="category"
+       formControlName="category"
+       class="form-control" [ngClass]="{ 'is-invalid': submitted && f.category.errors }"
+       >
+         <option selected value="">Events...</option>
+         <option *ngFor="let cat of categories" [value]="cat">
+           {{cat}}
+         </option>
+       </select>
+       <div *ngIf="submitted && f.category.errors" class="invalid-feedback">
+        <div *ngIf="f.category.errors.required"> Select an option</div>
+    </div>
+      
+    </div>
+  </div>
+       
+    
+<div class="form-row">
+<!-- Start date -->
+    <div class="form-group col">
+    <label for="startDate">Start Date:</label>
+    <input type="date" formControlName="startDate" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.startDate.errors }">
+    <div *ngIf="submitted && f.startDate.errors" class="invalid-feedback">
+        <div *ngIf="f.startDate.errors.required">Select the start date</div>
+    </div>  
+    </div>
+
+<!-- End date -->
+    <div class="form-group col">
+        <label for="endDate">End Date:</label>
+        <input type="date" formControlName="endDate" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.endDate.errors }">
+        <div *ngIf="submitted && f.endDate.errors" class="invalid-feedback">
+            <div *ngIf="f.endDate.errors.required">Select the end date</div>
+        </div>  
+        </div> 
+  </div>
+  
+  <!-- Description -->
+<div class="form-row">
+    <div class="form-group col">
+    <label for="textArea">Description:  </label> 
+    <textarea  formControlName="textArea"  class="form-control" [ngClass]="{ 'is-invalid': submitted && f.textArea.errors }">
+    </textarea>
+    <div *ngIf="submitted && f.textArea.errors" class="invalid-feedback">
+        <div *ngIf="f.textArea.errors.required"> Describe about your todo task</div>
+    </div>
+    
+    </div>
+  </div>
+
+<!-- Priority -->
+<div class="form-row">
+    <div class="form-group col">
+      <label for="priority">Priority:</label>
+      <mat-radio-group class="example-radio-group"
+      formControlName="priority" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.priority.errors }">
+      <mat-radio-button class="example-radio-button" *ngFor="let priority of priorities" [value]="priority">
+        {{priority}} 
+      </mat-radio-button>
+    </mat-radio-group> 
+    <div *ngIf="submitted && f.priority.errors" class="invalid-feedback">
+        <div *ngIf="f.priority.errors.required"> Select priority</div>
+    </div> 
+    </div>
+  </div>
+
+
+    <div class="form-group">
+        <button [disabled]="loading" class="btn btn-primary">
+            <span *ngIf="loading" class="spinner-border spinner-border-sm mr-1"></span>
+            Save
+        </button>
+        <a routerLink="/todo" class="btn btn-link">Cancel</a>
+    </div>
+</form>
